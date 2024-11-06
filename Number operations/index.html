@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .container input,
+        .container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Number Operations</h1>
+
+<div class="container">
+    <h2>Even or Odd</h2>
+    <input type="number" id="evenOddInput" placeholder="Enter a number">
+    <button onclick="checkEvenOdd()">Check Even or Odd</button>
+    <div id="evenOddResult" class="result"></div>
+</div>
+
+<div class="container">
+    <h2>Factorial</h2>
+    <input type="number" id="factorialInput" placeholder="Enter a number">
+    <button onclick="calculateFactorial()">Find Factorial</button>
+    <div id="factorialResult" class="result"></div>
+</div>
+
+<div class="container">
+    <h2>Multiplication Table</h2>
+    <input type="number" id="tableInput" placeholder="Enter a number">
+    <button onclick="printTable()">Print Table</button>
+    <div id="tableResult" class="result"></div>
+</div>
+
+<div class="container">
+    <h2>Number to Words (0 - 999)</h2>
+    <input type="text" id="numberWordsInput" placeholder="Enter a number (0-999)">
+    <button onclick="convertToWords()">Convert to Words</button>
+    <div id="numberWordsResult" class="result"></div>
+</div>
+
+<script>
+    // Function to check if a number is even or odd
+    function checkEvenOdd() {
+        const num = parseInt(document.getElementById("evenOddInput").value);
+        if (isNaN(num)) {
+            document.getElementById("evenOddResult").textContent = "Please enter a valid number.";
+            return;
+        }
+        document.getElementById("evenOddResult").textContent = (num % 2 === 0) ? "Even" : "Odd";
+    }
+
+    // Function to calculate factorial of a number
+    function calculateFactorial() {
+        let num = parseInt(document.getElementById("factorialInput").value);
+        if (isNaN(num) || num < 0) {
+            document.getElementById("factorialResult").textContent = "Please enter a positive number.";
+            return;
+        }
+        let factorial = 1;
+        for (let i = 1; i <= num; i++) {
+            factorial *= i;
+        }
+        document.getElementById("factorialResult").textContent = `Factorial: ${factorial}`;
+    }
+
+    // Function to print multiplication table of a number
+    function printTable() {
+        const num = parseInt(document.getElementById("tableInput").value);
+        if (isNaN(num)) {
+            document.getElementById("tableResult").textContent = "Please enter a valid number.";
+            return;
+        }
+        let table = "";
+        for (let i = 1; i <= 10; i++) {
+            table += `${num} x ${i} = ${num * i}<br>`;
+        }
+        document.getElementById("tableResult").innerHTML = table;
+    }
+
+    // Function to convert a number (0-999) into words
+    function convertToWords() {
+        const num = parseInt(document.getElementById("numberWordsInput").value);
+        if (isNaN(num) || num < 0 || num > 999) {
+            document.getElementById("numberWordsResult").textContent = "Please enter a number between 0 and 999.";
+            return;
+        }
+
+        const ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+        const teens = ["Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+        const tens = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+        const hundreds = ["", "One Hundred", "Two Hundred", "Three Hundred", "Four Hundred", "Five Hundred", "Six Hundred", "Seven Hundred", "Eight Hundred", "Nine Hundred"];
+
+        let words = "";
+
+        if (num === 0) {
+            words = "Zero";
+        } else {
+            words += hundreds[Math.floor(num / 100)];
+
+            let remainder = num % 100;
+            if (remainder > 10 && remainder < 20) {
+                words += " " + teens[remainder - 11];
+            } else {
+                words += " " + tens[Math.floor(remainder / 10)];
+                words += " " + ones[remainder % 10];
+            }
+        }
+
+        document.getElementById("numberWordsResult").textContent = words.trim();
+    }
+</script>
+
+</body>
+</html>
